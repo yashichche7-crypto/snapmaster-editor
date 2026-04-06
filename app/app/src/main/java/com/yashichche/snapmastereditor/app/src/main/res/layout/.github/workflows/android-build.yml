@@ -7,28 +7,26 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-    - name: Setup Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+      - name: Install Gradle
+        uses: gradle/gradle-build-action@v2
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+      - name: Build APK
+        run: gradle assembleDebug
 
-    - name: Build APK
-      run: ./gradlew assembleDebug
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
-      with:
-        name: snapmaster-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: SnapMaster-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
