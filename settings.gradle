@@ -1,0 +1,2 @@
+rootProject.name = "SnapMasterEditor"
+include ':app'
